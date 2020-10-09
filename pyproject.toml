@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "hydra-lightning"
+version = "0.1.0"
+description = "Configuration classes enabling Hydra to configure and manage Pytorch Lightning projects."
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/romesco/hydra-lightning"
+repository = "https://github.com/romesco/hydra-lightning"
+keywords = ["hydra", "pytorch", "lightning", "pytorch-lightning"]
+authors = ["Rosario Scalise <rosario@cs.washington.edu>"]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+hydra-core = "^1.0"
+hydra-configen = "*"
+pytorch-lightning = "^0.9"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+generate-configs = "hydra_lightning.generate_configs:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
