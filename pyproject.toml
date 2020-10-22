@@ -8,15 +8,20 @@ homepage = "https://github.com/romesco/hydra-lightning"
 repository = "https://github.com/romesco/hydra-lightning"
 keywords = ["hydra", "pytorch", "lightning", "pytorch-lightning"]
 authors = ["Rosario Scalise <rosario@cs.washington.edu>"]
+packages = [{ include = "hydra_lightning", from = "src"},
+            { include = "pl_config"}]
 
 
 [tool.poetry.dependencies]
 python = "^3.8"
-hydra-core = "^1.0"
-hydra-configen = "*"
-pytorch-lightning = "^0.9"
+hydra-core = {git = "https://github.com/facebookresearch/hydra"}
+hydra-torch-config = {git = "https://github.com/pytorch/hydra-torch"}
+pytorch-lightning = "^1.0"
+torchvision = "^0.7.0"
+ipdb = "^0.13.4"
 
 [tool.poetry.dev-dependencies]
+hydra-configen = "*"
 
 [tool.poetry.scripts]
 generate-configs = "hydra_lightning.generate_configs:main"
