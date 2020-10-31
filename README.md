@@ -1,5 +1,5 @@
 ## What is this?
-This is a collection of auto-generated configuration files to enable using [Pytorch Lightning](https://github.com/pytorchlightning/pytorchlightning) with [Hydra](https://hydra.cc). The emphasis on this repository is to provide a stable set of base configs that track the current versions of Lightning and Hydra. If either changes its API, these configs will update automatically as well.
+This is a collection of auto-generated configuration files to enable using [Pytorch Lightning](https://github.com/pytorchlightning/pytorch-lightning) with [Hydra](https://hydra.cc). The emphasis on this repository is to provide a stable set of base configs that track the current versions of Lightning and Hydra. If either changes its API, these configs will update automatically as well.
 
 Here is an example of the base config for the `EarlyStopping` Callback from Pytorch Lightning:
 
