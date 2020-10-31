@@ -17,7 +17,9 @@ class EarlyStoppingConf:
     
 This is useful because it allows you to quickly import these configs like:
 
-```from pl_config.callbacks import EarlyStoppingConf```
+```python
+from pl_config.callbacks import EarlyStoppingConf
+```
 
 Now you are free to use this config with its pre-set defaults and override any values programatically using one of:
 1. command line args
@@ -27,7 +29,7 @@ Now you are free to use this config with its pre-set defaults and override any v
 ## Looking for `torch` configs?
 If you're interested in configuring Lightning classes, you're probably interested in configuring normal torch classes as well. 
 Things like:
-```
+```python
 Adam
 LRStep
 Linear
