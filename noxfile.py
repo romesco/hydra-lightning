@@ -1,0 +1,31 @@
+import nox
+import os
+
+DEFAULT_PYTHON_VERSIONS = ["3.6", "3.7", "3.8"]
+PYTHON_VERSIONS = os.environ.get(
+    "NOX_PYTHON_VERSIONS", ",".join(DEFAULT_PYTHON_VERSIONS)
+).split(",")
+
+VERBOSE = os.environ.get("VERBOSE", "0")
+SILENT = VERBOSE == "0"
+
+# Linted dirs/files:
+targets = "."
+
+
+def setup_dev_env(session):
+    session.run("poetry", "install", external=True)
+
+
+@nox.session(python=PYTHON_VERSIONS, reuse_venv=True)
+def lint(session):
+    setup_dev_env(session)
+    session.run("black", *targets, "--check")
+    session.run("flake8", "--config", ".flake8", *targets)
+
+
+@nox.session(python=PYTHON_VERSIONS, reuse_venv=True)
+def tests(session):
+    setup_dev_env(session)
+    session.install(".")  # install config package
+    session.run("pytest", "tests")
