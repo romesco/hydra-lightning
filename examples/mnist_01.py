@@ -1,3 +1,5 @@
+# Original example from: https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist.py
+
 import torch
 import pytorch_lightning as pl
 from torch.nn import functional as F

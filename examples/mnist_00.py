@@ -1,3 +1,5 @@
+# Original example from: https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist.py
+
 #NOTE: no more argparse:
 #from argparse import ArgumentParser
 
