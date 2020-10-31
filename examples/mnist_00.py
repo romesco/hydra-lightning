@@ -19,7 +19,7 @@ from typing import Any
 
 # structured config imports
 from config.torch.optim import AdamConf
-from pl_config.trainer import TrainerConf
+from config.pytorch_lightning.trainer import TrainerConf
 
 @dataclass
 class LitClassifierConf:
