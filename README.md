@@ -48,7 +48,7 @@ https://github.com/pytorch/hydra-torch/
 3. Advanced Tutorial (coming soon)
 
 #### Lightning
-1. Basic Tutorial (coming soon - for now see [examples/mnist_00.py](examples/mnist_00.py).
+1. Basic Tutorial (coming soon - for now see [examples/mnist_00.py](examples/mnist_00.py)).
 2. Intermediate Tutorial (coming soon)
 
 
