@@ -1,4 +1,14 @@
-import hydra_configs.pytorch_lightning
 from dataclasses import fields
 
+# with pytorch_lightning version = 0.9.0, this uses the 'legacy configs' from
+# legacy/hydra_configs/pytorch_lightning_v091/trainer
+import hydra_configs.pytorch_lightning
 print(fields(hydra_configs.pytorch_lightning.TrainerConf)[0])
+
+# this however, does not
+from hydra_configs.pytorch_lightning.trainer import TrainerConf
+print(fields(TrainerConf)[0])
+
+# this works as expected:
+from hydra_configs.pytorch_lightning_v091.trainer import TrainerConf
+print(fields(TrainerConf)[0])
