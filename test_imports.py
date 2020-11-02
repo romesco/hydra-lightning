@@ -1,18 +1,21 @@
 from dataclasses import fields
 
-# with pytorch_lightning version = 0.9.0, this uses the 'legacy configs' from
-# legacy/hydra_configs/pytorch_lightning_v091/trainer
+'''
+all of these examples are run using the deprecated, pytorch_lightning version = 0.9.0
+-> expected functionality is to use the 'legacy configs' from legacy/hydra_configs/pytorch_lightning_v091/trainer
+'''
+
+########### this works as expected. up-to-date gets 'main', out-of-date gets 'legacy'
 import hydra_configs.pytorch_lightning
 print(fields(hydra_configs.pytorch_lightning.TrainerConf)[0])
-# prints old trainer config
+print(fields(hydra_configs.pytorch_lightning.EarlyStoppingConf)[0])
+print(fields(hydra_configs.pytorch_lightning.AccuracyConf)[0])
 
+############ this also works as expected
+#from hydra_configs.pytorch_lightning_v091.trainer import TrainerConf
+#print(fields(TrainerConf)[0])
 
-# this however, does not
-from hydra_configs.pytorch_lightning.trainer import TrainerConf
-print(fields(TrainerConf)[0])
-# prints new trainer config (we want old)
-
-# this works as expected:
-from hydra_configs.pytorch_lightning_v091.trainer import TrainerConf
-print(fields(TrainerConf)[0])
-# prints old trainer config
+############ we have yet to make this work properly:
+#from hydra_configs.pytorch_lightning.trainer import TrainerConf
+#print(fields(TrainerConf)[0])
+############ prints new trainer config (we want old)
