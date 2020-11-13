@@ -6,12 +6,21 @@
 # flake8: noqa
 # Hydra + Lightning:
 
-from dataclasses import dataclass, field
-from builtins import list
-from omegaconf import MISSING
-from typing import Any
-from typing import Optional
 
+from dataclasses import dataclass 
+from omegaconf import MISSING
+from typing import Any, Optional
+import pytorch_lightning as pl
+from packaging import version
+import importlib
+
+def override_imports_for_legacy():
+    if version.parse(pl.__version__) < version.parse("1.0.0"):
+        module = importlib.import_module('hydra_configs.pytorch_lightning_v090.trainer')
+        globals().update(
+            {n: getattr(module, n) for n in module.__all__} if hasattr(module, '__all__') else 
+            {k: v for (k, v) in module.__dict__.items() if not k.startswith('_')}
+        )
 
 @dataclass
 class TrainerConf:
@@ -33,8 +42,6 @@ class TrainerConf:
     track_grad_norm: float = -1  # Union[int, float, str]
     check_val_every_n_epoch: int = 1
     fast_dev_run: bool = False
-    accumulate_grad_batches: int = 1  # Union[int, Dict[int, int], List[list]]
-    max_epochs: int = 1000
     min_epochs: int = 1
     max_steps: Optional[int] = None
     min_steps: Optional[int] = None
@@ -66,3 +73,5 @@ class TrainerConf:
     amp_level: str = "O2"
     distributed_backend: Optional[str] = None
     automatic_optimization: bool = True
+
+override_imports_for_legacy()

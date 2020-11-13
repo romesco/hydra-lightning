@@ -6,8 +6,19 @@
 # flake8: noqa
 # Hydra + Lightning:
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
+import pytorch_lightning as pl
+from packaging import version
+import importlib
+
+def override_imports_for_legacy():
+    if version.parse(pl.__version__) < version.parse("1.0.0"):
+        module = importlib.import_module('hydra_configs.pytorch_lightning_v090.metrics.classification')
+        globals().update(
+            {n: getattr(module, n) for n in module.__all__} if hasattr(module, '__all__') else 
+            {k: v for (k, v) in module.__dict__.items() if not k.startswith('_')}
+        )
 
 
 @dataclass
@@ -42,3 +53,5 @@ class PrecisionConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
+
+override_imports_for_legacy()
