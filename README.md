@@ -1,6 +1,11 @@
-## Install:
+## Quick Start:
 ```
 pip install git+https://github.com/romesco/hydra-lightning/#subdirectory=hydra-configs-lightning
+```
+
+```python
+import hydra
+from hydra_configs.pytorch_lightning.trainer import TrainerConf
 ```
 
 ## What is this?
