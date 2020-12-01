@@ -1,7 +1,8 @@
+# flake8: noqa
 # Original example from: https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist.py
 
-#NOTE: no more argparse:
-#from argparse import ArgumentParser
+# NOTE: no more argparse:
+# from argparse import ArgumentParser
 
 import torch
 import pytorch_lightning as pl
@@ -18,36 +19,43 @@ from dataclasses import dataclass
 from typing import Any
 
 # structured config imports
-from config.torch.optim import AdamConf
-from config.pytorch_lightning.trainer import TrainerConf
+from hydra_configs.torch.optim import AdamConf
+from hydra_configs.torch.utils.data import DataLoaderConf
+from hydra_configs.pytorch_lightning.trainer import TrainerConf
 
 @dataclass
 class LitClassifierConf:
     trainer: TrainerConf = TrainerConf()
-    optim_conf: Any = AdamConf()
+    # `dataset` must be initialized to `None` in conf.
+    # We populate it later in `instantiate()`:
+    dataloader: DataLoaderConf = DataLoaderConf(dataset=None)
+    # similarly, `params` must be initialized to `None`:
+    optim: Any = AdamConf(params=None)
     hidden_dim: int = 128
-    data_shape: int = 1*28*28
-    target_shape: int = 1*10
-    root_dir: str = '.'
+    data_shape: Any = 1 * 28 * 28
+    target_shape: Any = 1 * 10
+    root_dir: str = "."
     seed: int = 1234
-	
+
+
 cs = ConfigStore.instance()
 cs.store(name="litconf", node=LitClassifierConf)
 # ====== / HYDRA BLOCK =========
 
+
 class LitClassifier(pl.LightningModule):
     def __init__(
-		self,
-		data_shape: int = 1*28*28,
-		hidden_dim: int = 128,
-		target_shape: int = 1*10,
-		learning_rate: float = 1e-3,
-                **kwargs # NOTE: if you want hparams to contain/log your whole cfg, this is important 
-		):
+        self,
+        data_shape: int = 1 * 28 * 28,
+        hidden_dim: int = 128,
+        target_shape: int = 1 * 10,
+        learning_rate: float = 1e-3,
+        **kwargs  # NOTE: if you want hparams to contain/log your whole cfg, this is important
+    ):
         super().__init__()
         self.save_hyperparameters()
 
-        self.l1 = torch.nn.Linear(data_shape,self.hparams.hidden_dim)
+        self.l1 = torch.nn.Linear(data_shape, self.hparams.hidden_dim)
         self.l2 = torch.nn.Linear(self.hparams.hidden_dim, target_shape)
 
     def forward(self, x):
@@ -66,17 +74,19 @@ class LitClassifier(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = F.cross_entropy(y_hat, y)
-        self.log('valid_loss', loss)
+        self.log("valid_loss", loss)
 
     def test_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self(x)
         loss = F.cross_entropy(y_hat, y)
-        self.log('test_loss', loss)
+        self.log("test_loss", loss)
 
     def configure_optimizers(self):
-        return torch.optim.Adam(lr=self.hparams.learning_rate, params=self.parameters()) 
-# NOTE: This is no longer needed as the __init__ definees this interface
+        return hydra.utils.instantiate(self.hparams.optim, params=self.parameters())
+
+
+# NOTE: This is no longer needed as the __init__ defines this interface
 #    @staticmethod
 #    def add_model_specific_args(parent_parser):
 #        parser = ArgumentParser(parents=[parent_parser], add_help=False)
@@ -84,7 +94,8 @@ class LitClassifier(pl.LightningModule):
 #        parser.add_argument('--learning_rate', type=float, default=0.0001)
 #        return parser
 
-@hydra.main(config_name='litconf')
+
+@hydra.main(config_name="litconf")
 def cli_main(cfg):
     # NOTE: This is needed so that data is only downloaded once. It keeps the data directory at the root.
     cfg.root_dir = hydra.utils.get_original_cwd()
@@ -94,36 +105,43 @@ def cli_main(cfg):
     # ------------
     # args
     # ------------
-    # NOTE: These are no longer needed 
-    #parser = ArgumentParser()
-    #parser.add_argument('--batch_size', default=32, type=int)
-    #parser = pl.Trainer.add_argparse_args(parser)
-    #parser = LitClassifier.add_model_specific_args(parser)
+    # NOTE: These are no longer needed
+    # parser = ArgumentParser()
+    # parser.add_argument('--batch_size', default=32, type=int)
+    # parser = pl.Trainer.add_argparse_args(parser)
+    # parser = LitClassifier.add_model_specific_args(parser)
     ##args = parser.parse_args()
 
     # ------------
     # data
     # ------------
-    dataset = MNIST(root=cfg.root_dir, train=True, download=True, transform=transforms.ToTensor())
-    mnist_test = MNIST(root=cfg.root_dir, train=False, download=True, transform=transforms.ToTensor())
+    dataset = MNIST(
+        root=cfg.root_dir, train=True, download=True, transform=transforms.ToTensor()
+    )
+    mnist_test = MNIST(
+        root=cfg.root_dir, train=False, download=True, transform=transforms.ToTensor()
+    )
     mnist_train, mnist_val = random_split(dataset, [55000, 5000])
 
-    # NOTE: We use DataLoader([split_name], **cfg.dataloader) to pass the config keywords to DataLoader()
-    train_loader = DataLoader(mnist_train, **cfg.dataloader)
-    val_loader = DataLoader(mnist_val, **cfg.dataloader)
-    test_loader = DataLoader(mnist_test, **cfg.dataloader)
-
+    # NOTE: We use `hydra.utils.instantiate(cfg.dataloader, dataset=<split name>))` because the DataLoaderConf is an autogenerated hydra-torch config. `dataset=<split name>` enables hydra's instantiate to pass each previously created dataset to the DataLoader constructor.
+    train_loader = hydra.utils.instantiate(cfg.dataloader, dataset=mnist_train)
+    val_loader = hydra.utils.instantiate(
+        cfg.dataloader, dataset=mnist_val, _recursive_=False
+    )
+    test_loader = hydra.utils.instantiate(
+        cfg.dataloader, dataset=mnist_test, _recursive_=False
+    )
 
     # ------------
     # model
     # ------------
-    # NOTE: We use LitClassifier(**cfg) since LitClassifier is not an autogenerated hydra-lightning config class and therefore does not have a `__target__` field. One could add this in order to use `hydra.utils.instantiate(cfg.trainer)`.
+    # NOTE: Here we use LitClassifier(**cfg) since LitClassifier is not an autogenerated hydra-lightning config class and therefore does not have a `__target__` field. One could add this in order to use `hydra.utils.instantiate(cfg.trainer)`.
     model = LitClassifier(**cfg)
 
     # ------------
     # training
     # ------------
-    # NOTE: Here we use `hydra.utils.instantiate(cfg.trainer)` because the trainer conf is an autogenerated hydra-lightning config. This is additionally useful as it support recursive instnantiation (for example adding `Callback`s).
+    # NOTE: Again, we use `hydra.utils.instantiate(cfg.trainer)` because the trainer conf is an autogenerated hydra-lightning config. This is additionally useful as it supports recursive instnantiation (for example adding Callbacks).
     trainer = hydra.utils.instantiate(cfg.trainer)
     trainer.fit(model, train_loader, val_loader)
 
@@ -133,5 +151,5 @@ def cli_main(cfg):
     trainer.test(test_dataloaders=test_loader)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli_main()

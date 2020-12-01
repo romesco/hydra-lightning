@@ -1,0 +1,6 @@
+# Requirements for running examples:
+torch ~= 1.6
+torchvision ~= 0.7.0
+pytorch_lightning ~= 1.0
+git+https://github.com/pytorch/hydra-torch.git@master#subdirectory=hydra-configs-torch
+git+https://github.com/pytorch/hydra-torch.git@master#subdirectory=hydra-configs-torchvision

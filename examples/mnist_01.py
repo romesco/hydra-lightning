@@ -1,3 +1,4 @@
+# flake8: noqa
 # Original example from: https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist.py
 
 import torch
@@ -16,36 +17,39 @@ from dataclasses import dataclass
 from typing import Any
 
 # structured config imports
-from config.torch.optim import AdamConf
-from pl_config.trainer import TrainerConf
+from hydra_configs.torch.optim import AdamConf
+from hydra_configs.pytorch_lightning.trainer import TrainerConf
+
 
 @dataclass
 class LitClassifierConf:
     trainer: TrainerConf = TrainerConf()
     optim_conf: Any = AdamConf()
     hidden_dim: int = 128
-    data_shape: int = 1*28*28
-    target_shape: int = 1*10
-    root_dir: str = '.'
+    data_shape: int = 1 * 28 * 28
+    target_shape: int = 1 * 10
+    root_dir: str = "."
     seed: int = 1234
-	
+
+
 cs = ConfigStore.instance()
 cs.store(name="litconf", node=LitClassifierConf)
 # ====== / HYDRA BLOCK =========
 
+
 class LitClassifier(pl.LightningModule):
     def __init__(
-		self,
-		data_shape: int = 1*28*28,
-		hidden_dim: int = 128,
-		target_shape: int = 1*10,
-		learning_rate: float = 1e-3,
-                **kwargs # NOTE: if you want hparams to contain/log your whole cfg, this is important 
-		):
+        self,
+        data_shape: int = 1 * 28 * 28,
+        hidden_dim: int = 128,
+        target_shape: int = 1 * 10,
+        learning_rate: float = 1e-3,
+        **kwargs  # NOTE: if you want hparams to contain/log your whole cfg, this is important
+    ):
         super().__init__()
         self.save_hyperparameters()
 
-        self.l1 = torch.nn.Linear(data_shape,self.hparams.hidden_dim)
+        self.l1 = torch.nn.Linear(data_shape, self.hparams.hidden_dim)
         self.l2 = torch.nn.Linear(self.hparams.hidden_dim, target_shape)
 
     def forward(self, x):
@@ -64,18 +68,19 @@ class LitClassifier(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = F.cross_entropy(y_hat, y)
-        self.log('valid_loss', loss)
+        self.log("valid_loss", loss)
 
     def test_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self(x)
         loss = F.cross_entropy(y_hat, y)
-        self.log('test_loss', loss)
+        self.log("test_loss", loss)
 
     def configure_optimizers(self):
-        return torch.optim.Adam(lr=self.hparams.learning_rate, params=self.parameters()) 
+        return torch.optim.Adam(lr=self.hparams.learning_rate, params=self.parameters())
 
-@hydra.main(config_name='litconf')
+
+@hydra.main(config_name="litconf")
 def cli_main(cfg):
     # NOTE: this is needed so that data is only downloaded once
     cfg.root_dir = hydra.utils.get_original_cwd()
@@ -85,14 +90,17 @@ def cli_main(cfg):
     # ------------
     # data
     # ------------
-    dataset = MNIST(root=cfg.root_dir, train=True, download=True, transform=transforms.ToTensor())
-    mnist_test = MNIST(root=cfg.root_dir, train=False, download=True, transform=transforms.ToTensor())
+    dataset = MNIST(
+        root=cfg.root_dir, train=True, download=True, transform=transforms.ToTensor()
+    )
+    mnist_test = MNIST(
+        root=cfg.root_dir, train=False, download=True, transform=transforms.ToTensor()
+    )
     mnist_train, mnist_val = random_split(dataset, [55000, 5000])
 
     train_loader = DataLoader(mnist_train, **cfg.dataloader)
     val_loader = DataLoader(mnist_val, **cfg.dataloader)
     test_loader = DataLoader(mnist_test, **cfg.dataloader)
-
 
     # ------------
     # model
@@ -113,5 +121,5 @@ def cli_main(cfg):
     trainer.test(test_dataloaders=test_loader)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli_main()
