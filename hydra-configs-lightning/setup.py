@@ -1,7 +1,7 @@
 from setuptools import find_namespace_packages, setup
 
 setup(
-    name="hydra-configs-torch",
+    name="hydra-configs-pytorch-lightning",
     version="1.0.1",
     packages=find_namespace_packages(include=["hydra_configs*"]),
     author=["Rosario Scalise"],
