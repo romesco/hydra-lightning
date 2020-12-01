@@ -61,7 +61,7 @@ https://github.com/pytorch/hydra-torch/
 2. Intermediate Tutorial (coming soon)
 
 
-## Installation
+## Dev Installation
 
 `poetry install`
 
