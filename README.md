@@ -14,7 +14,7 @@ class EarlyStoppingConf:
     mode: str = "auto"
     strict: bool = True
  ```
-    
+
 This is useful because it allows you to quickly import these configs like:
 
 ```python
@@ -27,7 +27,7 @@ Now you are free to use this config with its pre-set defaults and override any v
 3. structured configs (dataclasses)
 
 ## Looking for `torch` configs?
-If you're interested in configuring Lightning classes, you're probably interested in configuring normal torch classes as well. 
+If you're interested in configuring Lightning classes, you're probably interested in configuring normal torch classes as well.
 Things like:
 ```python
 Adam
