@@ -23,7 +23,6 @@ from hydra_configs.torch.optim import AdamConf
 from hydra_configs.torch.utils.data import DataLoaderConf
 from hydra_configs.pytorch_lightning.trainer import TrainerConf
 
-
 @dataclass
 class LitClassifierConf:
     trainer: TrainerConf = TrainerConf()
