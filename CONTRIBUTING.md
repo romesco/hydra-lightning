@@ -19,8 +19,7 @@ Here's the workflow:
 
 1. Fork the repo and create your feature branch from `main`.
 2. If you've added code, add suitable tests.
-3. If you've changed APIs, update the documentation.
-4. Ensure the test suite and lint pass.
+3. Ensure the test suite and lint pass.
 
 ## Issues
 Please file issue if you require a new config we have not provided, have an idea for a useful tutorial, or notice a bug.
