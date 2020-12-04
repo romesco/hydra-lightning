@@ -1,4 +1,4 @@
-# Unique Aspects of This Repo
+## Unique Aspects of This Repo
 We are striving for this repo to be a close to 'self-maintained' as possible.
 A decent amount of the core code (the configuration files themselves) are auto-generated
 by a tool called `configen` which we are working on directly within `hydra`. Generally,
