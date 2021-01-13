@@ -27,7 +27,7 @@ class EarlyStoppingConf:
 This is useful because it allows you to quickly import these configs like:
 
 ```python
-from pl_config.callbacks import EarlyStoppingConf
+from hydra_configs.pytorch_lightning.callbacks import EarlyStoppingConf
 ```
 
 Now you are free to use this config with its pre-set defaults and override any values programatically using one of:
