@@ -66,4 +66,4 @@ class TrainerConf:
     distributed_backend: Optional[str] = None
     automatic_optimization: Optional[bool] = None
     move_metrics_to_cpu: bool = False
-    enable_pl_optimizer: bool = None
+    enable_pl_optimizer: bool = False 
