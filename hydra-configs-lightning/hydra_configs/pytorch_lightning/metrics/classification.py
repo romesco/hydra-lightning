@@ -7,6 +7,8 @@
 # Hydra + Lightning
 
 from dataclasses import dataclass, field
+from omegaconf import MISSING
+from typing import Callable
 from typing import Optional
 
 
@@ -17,12 +19,13 @@ class AccuracyConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
+    dist_sync_fn: Callable[] = None
 
 
 @dataclass
 class FbetaConf:
     _target_: str = "pytorch_lightning.metrics.classification.Fbeta"
-    num_classes: int = 1
+    num_classes: int = MISSING
     beta: float = 1.0
     threshold: float = 0.5
     average: str = "micro"
