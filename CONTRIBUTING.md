@@ -6,9 +6,12 @@ users of these configs do not have to understand how to use `configen`. However,
 plan to contribute, it will be much easier if you have taken a look at
 [how `configen` works](https://github.com/facebookresearch/hydra/tree/master/tools/configen) first.
 
-Put simply, think of the directory `/configen` as the source for the core configs. To expand this,
-we edit `/configen/conf` and then regenerate. Currently, this is done through `generate_configs.py`,
-but this may be updated.
+Put simply, think of the directory `/configen` as the source for the core configs.
+We regenerate configs using the `configen` command
+
+```sh
+configen --config-dir configen/conf --config-name pytorch_lightning
+```
 
 
 ## Pull Requests

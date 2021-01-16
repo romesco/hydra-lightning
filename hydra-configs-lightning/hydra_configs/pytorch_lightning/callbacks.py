@@ -7,6 +7,8 @@
 # Hydra + Lightning
 
 from dataclasses import dataclass, field
+from omegaconf import MISSING
+from typing import Any
 from typing import Optional
 
 
@@ -33,6 +35,8 @@ class ModelCheckpointConf:
     mode: str = "auto"
     period: int = 1
     prefix: str = ""
+    dirpath: Any = MISSING  # Union[str, Path, NoneType]
+    filename: Optional[str] = None
 
 
 @dataclass
