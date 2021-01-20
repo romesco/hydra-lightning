@@ -38,6 +38,7 @@ pyenv which python # confirm you have the python you expect
 
 # Install poetry and pipx
 
+wget https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
 python3 get-poetry.py
 python3 -m pip install --user pipx
 
