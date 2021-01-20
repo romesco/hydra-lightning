@@ -6,8 +6,21 @@ import nox
 import nox_poetry.patch  # noqa
 from nox.sessions import Session
 
+project = "hydra-configs-pytorch-lightning"
+package = "hydra_configs"
+package_path = f"{project}/{package}"
+tests_path = f"{project}/tests"
+
+# Note: Dev Requirements w/ constraints are defined in pyproject.toml,
+# however we explicitly list just those needed for tests here as our
+# workflow only install reqs needed for a specific session, not all dev reqs.
+test_reqs = ["coverage[toml]", "pytest", "pygments", "hydra-core"]
+
 python_versions = ["3.9", "3.8", "3.7", "3.6"]
-nox.options.sessions = ("pre-commit",)
+nox.options.sessions = (
+    "pre-commit",
+    "tests",
+)
 
 
 def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
@@ -81,3 +94,31 @@ def precommit(session: Session) -> None:
     session.run("pre-commit", *args)
     if args and args[0] == "install":
         activate_virtualenv_in_precommit_hooks(session)
+
+
+@nox.session(python=python_versions)
+def tests(session: Session) -> None:
+    """Run the test suite."""
+    session.install(".")
+    session.install(*test_reqs)
+    session.run("poetry", "install", external=True)
+    try:
+        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
+    finally:
+        if session.interactive:
+            session.notify("coverage")
+
+
+@nox.session
+def coverage(session: Session) -> None:
+    """Produce the coverage report."""
+    # Do not use session.posargs unless this is the only session.
+    has_args = session.posargs and len(session._runner.manifest) == 1
+    args = session.posargs if has_args else ["report"]
+
+    session.install("coverage[toml]")
+
+    if not has_args and any(Path().glob(".coverage.*")):
+        session.run("coverage", "combine")
+
+    session.run("coverage", *args)

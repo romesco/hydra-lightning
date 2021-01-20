@@ -32,14 +32,21 @@ flake8-bugbear = "^20.1.4"
 pep8-naming = "^0.11.1"
 reorder-python-imports = "^2.3.6"
 Pygments = "^2.7.2"
+pytest = "^6.1.2"
+coverage = {extras = ["toml"], version = "^5.3"}
 
 [tool.poetry.scripts]
 
 [tool.coverage.paths]
+source = ["hydra-configs-pytorch-lightning", "*/site-packages"]
 
 [tool.coverage.run]
+branch = true
+source = ["hydra-configs-pytorch-lightning"]
 
 [tool.coverage.report]
+show_missing = true
+fail_under = 100
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
