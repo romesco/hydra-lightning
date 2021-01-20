@@ -50,6 +50,7 @@ source = ["hydra-configs-pytorch-lightning"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
+include = ["hydra-configs-pytorch-lightning"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
