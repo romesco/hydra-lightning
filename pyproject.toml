@@ -1,31 +1,45 @@
 [tool.poetry]
-name = "hydra-lightning"
+name = "hydra-configs-pytorch-lightning"
 version = "0.1.0"
-description = "Configuration classes enabling Hydra to configure and manage Pytorch Lightning projects."
+description = "Hydra Lightning"
+authors = ["Rosario Scalise <rosario@cs.uw.edu>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/romesco/hydra-lightning"
 repository = "https://github.com/romesco/hydra-lightning"
-keywords = ["hydra", "pytorch", "lightning", "pytorch-lightning"]
-authors = ["Rosario Scalise <rosario@cs.washington.edu>"]
-packages = [{ include = "hydra_configs", from = "legacy"},
-            { include = "hydra_configs"}]
+documentation = "https://github.com/romesco/README.md"
+classifiers = [
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
+packages = [{ include = "hydra-configs-pytorch-lightning/hydra_configs" }]
 
+[tool.poetry.urls]
+Changelog = "https://github.com/romesco/hydra-lightning/releases"
 
 [tool.poetry.dependencies]
-python = "^3.8"
-hydra-core = {git = "https://github.com/facebookresearch/hydra"}
-hydra-torch-config = {git = "https://github.com/pytorch/hydra-torch"}
-pytorch-lightning = "1.0.0"
-torchvision = "^0.7.0"
-ipdb = "^0.13.4"
-packaging = "^20.4"
+python = "^3.6.1"
 
 [tool.poetry.dev-dependencies]
-hydra-configen = "*"
+hydra-core = "^1.0"
+black = "^20.8b1"
+pre-commit = "^2.8.2"
+pre-commit-hooks = "^3.3.0"
+flake8 = "^3.8.4"
+flake8-bugbear = "^20.1.4"
+pep8-naming = "^0.11.1"
+reorder-python-imports = "^2.3.6"
+Pygments = "^2.7.2"
 
 [tool.poetry.scripts]
-generate-configs = "hydra_lightning.generate_configs:main"
+
+[tool.coverage.paths]
+
+[tool.coverage.run]
+
+[tool.coverage.report]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -5,11 +5,12 @@
 # isort: skip_file
 # flake8: noqa
 # Hydra + Lightning
-
-from dataclasses import dataclass, field
-from omegaconf import MISSING
+from dataclasses import dataclass
+from dataclasses import field
 from typing import Any
 from typing import Optional
+
+from omegaconf import MISSING
 
 
 @dataclass
@@ -66,4 +67,4 @@ class TrainerConf:
     distributed_backend: Optional[str] = None
     automatic_optimization: Optional[bool] = None
     move_metrics_to_cpu: bool = False
-    enable_pl_optimizer: bool = False 
+    enable_pl_optimizer: bool = False

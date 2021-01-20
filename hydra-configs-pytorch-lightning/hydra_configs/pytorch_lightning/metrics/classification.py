@@ -5,11 +5,12 @@
 # isort: skip_file
 # flake8: noqa
 # Hydra + Lightning
-
-from dataclasses import dataclass, field
-from omegaconf import MISSING
+from dataclasses import dataclass
+from dataclasses import field
 from typing import Callable
 from typing import Optional
+
+from omegaconf import MISSING
 
 
 @dataclass
@@ -19,7 +20,7 @@ class AccuracyConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
-    dist_sync_fn: Callable[] = None
+    dist_sync_fn: Callable = None
 
 
 @dataclass
