@@ -37,8 +37,10 @@ pyenv local 3.9.0 # sets this as local python version for directory
 pyenv which python # confirm you have the python you expect
 
 # Install poetry and pipx
+# For more info on poetry: https://python-poetry.org/docs/#installation
+# For more info on pipx: https://github.com/pipxproject/pipx#overview-what-is-pipx
 
-python3 get-poetry.py
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 python3 -m pip install --user pipx
 
 # Install nox and nox-poetry (pipx is now recommended for installing applications).
