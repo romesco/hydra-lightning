@@ -15,8 +15,8 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
 ]
 packages = [
-{ include = "hydra-configs-pytorch-lightning/hydra_configs" }
-{ include = "hydra-configs-pytorch-lightning/tests" }
+    { include = "hydra-configs-pytorch-lightning/hydra_configs" },
+    { include = "hydra-configs-pytorch-lightning/tests" }
 ]
 
 [tool.poetry.urls]
