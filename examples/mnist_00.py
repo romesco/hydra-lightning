@@ -1,27 +1,27 @@
 # flake8: noqa
 # Original example from: https://github.com/PyTorchLightning/pytorch-lightning/blob/master/pl_examples/basic_examples/mnist.py
-
 # NOTE: no more argparse:
 # from argparse import ArgumentParser
-
-import torch
-import pytorch_lightning as pl
-from torch.nn import functional as F
-from torch.utils.data import DataLoader, random_split
-
-from torchvision.datasets.mnist import MNIST
-from torchvision import transforms
-
-# ====== NOTE: HYDRA BLOCK =========
-import hydra
-from hydra.core.config_store import ConfigStore
 from dataclasses import dataclass
 from typing import Any
 
-# structured config imports
+import hydra
+import pytorch_lightning as pl
+import torch
+from hydra.core.config_store import ConfigStore
+from torch.nn import functional as F
+from torch.utils.data import DataLoader
+from torch.utils.data import random_split
+from torchvision import transforms
+from torchvision.datasets.mnist import MNIST
+
+from hydra_configs.pytorch_lightning.trainer import TrainerConf
 from hydra_configs.torch.optim import AdamConf
 from hydra_configs.torch.utils.data import DataLoaderConf
-from hydra_configs.pytorch_lightning.trainer import TrainerConf
+
+# ====== NOTE: HYDRA BLOCK =========
+# structured config imports
+
 
 @dataclass
 class LitClassifierConf:

@@ -1,6 +1,7 @@
 import hydra
 from configen.config import Config
-from configen.configen import generate_module, save
+from configen.configen import generate_module
+from configen.configen import save
 
 
 @hydra.main(config_name="conf/configen")
