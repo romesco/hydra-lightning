@@ -116,6 +116,7 @@ jobs:
 
       - name: Combine coverage data and display human readable report
         run: |
+          ls -a /home/runner/work/hydra-lightning/hydra-lightning
           nox --force-color --session=coverage
 
       - name: Create coverage report
