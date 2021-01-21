@@ -17,6 +17,8 @@ tests_path = f"{project}/tests"
 test_reqs = ["coverage[toml]", "pytest", "pygments", "hydra-core"]
 
 python_versions = ["3.9", "3.8", "3.7", "3.6"]
+python_versions = ["3.9"]
+
 nox.options.sessions = (
     "pre-commit",
     "tests",
@@ -74,6 +76,7 @@ def activate_virtualenv_in_precommit_hooks(session: Session) -> None:
         hook.write_text("\n".join(lines))
 
 
+# name session lint
 @nox.session(name="pre-commit", python="3.9")
 def precommit(session: Session) -> None:
     """Lint using pre-commit."""
@@ -119,6 +122,8 @@ def coverage(session: Session) -> None:
     session.install("coverage[toml]")
 
     if not has_args and any(Path().glob(".coverage.*")):
+        session.run("ls", "-a")
         session.run("coverage", "combine")
+        session.run("ls", "-a")
 
     session.run("coverage", *args)

@@ -22,6 +22,7 @@ packages = [
 [tool.poetry.urls]
 Changelog = "https://github.com/romesco/hydra-lightning/releases"
 
+
 [tool.poetry.dependencies]
 python = "^3.6.1"
 
@@ -50,7 +51,6 @@ source = ["hydra-configs-pytorch-lightning"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
-include = ["/home/runner/work/hydra-lightning/hydra-lightning"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
