@@ -46,6 +46,7 @@ source = ["hydra-configs-pytorch-lightning", "*/site-packages"]
 
 [tool.coverage.run]
 branch = true
+relative_files = true
 source = ["hydra-configs-pytorch-lightning"]
 
 [tool.coverage.report]
