@@ -107,22 +107,4 @@ def tests(session: Session) -> None:
     try:
         session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
     finally:
-        if session.interactive:
-            session.notify("coverage")
-
-
-@nox.session
-def coverage(session: Session) -> None:
-    """Produce the coverage report."""
-    # Do not use session.posargs unless this is the only session.
-    has_args = session.posargs and len(session._runner.manifest) == 1
-    args = session.posargs if has_args else ["report"]
-
-    session.install("coverage[toml]")
-
-    if not has_args and any(Path().glob(".coverage.*")):
-        session.run("ls", "-a")
-        session.run("coverage", "combine")
-        session.run("ls", "-a")
-
-    session.run("coverage", *args)
+        session.run("coverage", "xml")
