@@ -17,7 +17,6 @@ tests_path = f"{project}/tests"
 test_reqs = ["coverage[toml]", "pytest", "pygments", "hydra-core"]
 
 python_versions = ["3.9", "3.8", "3.7", "3.6"]
-python_versions = ["3.9"]
 
 nox.options.sessions = (
     "pre-commit",
