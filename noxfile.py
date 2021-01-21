@@ -118,7 +118,6 @@ def coverage_report(session: Session) -> None:
     session.install("coverage[toml]")
 
     if any(Path().glob(".coverage.*")):
-        session.run("ls", "-a")
         session.run("coverage", "combine")
 
     session.run("coverage", "xml")
