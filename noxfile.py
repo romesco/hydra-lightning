@@ -108,5 +108,4 @@ def tests(session: Session) -> None:
         session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
         session.run("ls", "-a")
     finally:
-        if session.interactive:
-            session.run("coverage", "xml")
+        session.run("coverage", "report")
