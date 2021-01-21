@@ -106,5 +106,7 @@ def tests(session: Session) -> None:
     session.run("poetry", "install", external=True)
     try:
         session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
+        session.run("ls", "-a")
     finally:
-        session.run("coverage", "xml")
+        if session.interactive:
+            session.run("coverage", "xml")
