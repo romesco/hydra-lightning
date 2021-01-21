@@ -112,10 +112,13 @@ def tests(session: Session) -> None:
         session.notify("coverage_report")
 
 
-@nox.session(python=python_versions)
+@nox.session
 def coverage_report(session: Session) -> None:
     """Generate coverage report from tests output."""
-    session.install(".")
-    session.install(*test_reqs)
-    session.run("poetry", "install", external=True)
+    session.install("coverage[toml]")
+
+    if any(Path().glob(".coverage.*")):
+        session.run("ls", "-a")
+        session.run("coverage", "combine")
+
     session.run("coverage", "xml")
