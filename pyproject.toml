@@ -9,13 +9,12 @@ homepage = "https://github.com/romesco/hydra-lightning"
 repository = "https://github.com/romesco/hydra-lightning"
 documentation = "https://github.com/romesco/README.md"
 classifiers = [
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
 ]
 packages = [
-    { include = "hydra-configs-pytorch-lightning/hydra_configs" },
+    { include = "hydra_configs", from = "hydra-configs-pytorch-lightning" },
 ]
 
 [tool.poetry.urls]
@@ -23,10 +22,9 @@ Changelog = "https://github.com/romesco/hydra-lightning/releases"
 
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-hydra-core = "^1.0"
 black = "^20.8b1"
 pre-commit = "^2.8.2"
 pre-commit-hooks = "^3.3.0"
@@ -37,6 +35,8 @@ reorder-python-imports = "^2.3.6"
 Pygments = "^2.7.2"
 pytest = "^6.1.2"
 coverage = {extras = ["toml"], version = "^5.3"}
+pytorch-lightning = "^1.1.5"
+hydra-core = "^1.0.5"
 
 [tool.poetry.scripts]
 
@@ -46,7 +46,7 @@ source = ["hydra-configs-pytorch-lightning", "*/site-packages"]
 [tool.coverage.run]
 branch = true
 relative_files = true
-source = ["hydra-configs-pytorch-lightning"]
+source = ["hydra-configs-pytorch-lightning/hydra_configs"]
 
 [tool.coverage.report]
 show_missing = true
