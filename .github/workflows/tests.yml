@@ -17,8 +17,8 @@ jobs:
           - { python-version: 3.8, os: ubuntu-latest, session: "tests" }
           - { python-version: 3.7, os: ubuntu-latest, session: "tests" }
           - { python-version: 3.6, os: ubuntu-latest, session: "tests" }
-        # - { python-version: 3.9, os: windows-latest, session: "tests" }
-        # - { python-version: 3.9, os: macos-latest, session: "tests" }
+          - { python-version: 3.9, os: windows-latest, session: "tests" }
+          - { python-version: 3.9, os: macos-latest, session: "tests" }
 
     env:
       NOXSESSION: ${{ matrix.session }}
@@ -74,6 +74,10 @@ jobs:
       - name: Run Nox
         run: |
           nox --force-color --python=${{ matrix.python-version }}
+
+      - name: Create coverage report
+        run: |
+          nox --force-color --session=coverage -- xml
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v1.0.14
