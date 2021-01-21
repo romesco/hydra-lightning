@@ -11,12 +11,12 @@ package = "hydra_configs"
 package_path = f"{project}/{package}"
 tests_path = f"{project}/tests"
 
-# Note: Dev Requirements w/ constraints are defined in pyproject.toml,
+# NOTE: Dev Requirements w/ constraints are defined in pyproject.toml,
 # however we explicitly list just those needed for tests here as our
 # workflow only install reqs needed for a specific session, not all dev reqs.
-test_reqs = ["coverage[toml]", "pytest", "pygments", "hydra-core"]
+test_reqs = ["coverage[toml]", "pytest", "pygments", "hydra-core", "pytorch_lightning"]
 
-python_versions = ["3.9", "3.8", "3.7", "3.6"]
+python_versions = ["3.9", "3.8", "3.7"]
 
 nox.options.sessions = (
     "pre-commit",
@@ -106,7 +106,6 @@ def tests(session: Session) -> None:
 
     try:
         session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
-        session.run("ls", "-a")
     finally:
         session.notify("coverage_report")
 

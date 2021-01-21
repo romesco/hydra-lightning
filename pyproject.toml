@@ -15,7 +15,6 @@ classifiers = [
 ]
 packages = [
     { include = "hydra_configs", from = "hydra-configs-pytorch-lightning" },
-    { include = "tests", from = "hydra-configs-pytorch-lightning" },
 ]
 
 [tool.poetry.urls]
@@ -46,7 +45,6 @@ source = ["hydra-configs-pytorch-lightning", "*/site-packages"]
 
 [tool.coverage.run]
 branch = true
-relative_files = true
 source = ["hydra_configs"]
 
 [tool.coverage.report]
