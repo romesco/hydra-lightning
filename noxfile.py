@@ -104,8 +104,18 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install(*test_reqs)
     session.run("poetry", "install", external=True)
+
     try:
         session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
         session.run("ls", "-a")
     finally:
-        session.run("coverage", "report")
+        session.notify("coverage_report")
+
+
+@nox.session(python=python_versions)
+def coverage_report(session: Session) -> None:
+    """Generate coverage report from tests output."""
+    session.install(".")
+    session.install(*test_reqs)
+    session.run("poetry", "install", external=True)
+    session.run("coverage", "xml")
