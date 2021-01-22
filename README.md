@@ -1,7 +1,7 @@
 ## Quick Start:
 
 ```
-pip install git+https://github.com/romesco/hydra-lightning/#subdirectory=hydra-configs-lightning
+pip install git+https://github.com/romesco/hydra-lightning/#subdirectory=hydra-configs-pytorch-lightning
 ```
 
 ```python
