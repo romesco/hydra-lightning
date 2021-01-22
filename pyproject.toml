@@ -41,11 +41,15 @@ hydra-core = "^1.0.5"
 [tool.poetry.scripts]
 
 [tool.coverage.paths]
-source = ["hydra-configs-pytorch-lightning", "*/site-packages"]
+source = ["hydra-configs-pytorch-lightning"]
 
 [tool.coverage.run]
 branch = true
-source = ["hydra_configs"]
+source = [
+    "hydra-configs-pytorch-lightning",
+    "hydra-configs-pytorch-lightning/hydra_configs"
+]
+omit = ["*site-packages*", "*tests*"]
 
 [tool.coverage.report]
 show_missing = true
