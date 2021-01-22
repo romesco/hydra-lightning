@@ -7,6 +7,7 @@
 # Hydra + Lightning
 from dataclasses import dataclass
 from dataclasses import field
+from typing import Any
 from typing import Callable
 from typing import Optional
 
@@ -18,7 +19,7 @@ class ExplainedVarianceConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
-    dist_sync_fn: Callable = None
+    dist_sync_fn: Any = None # Callable
 
 
 @dataclass
@@ -27,7 +28,7 @@ class MeanAbsoluteErrorConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
-    dist_sync_fn: Callable = None
+    dist_sync_fn: Any = None # Callable
 
 
 @dataclass
@@ -36,7 +37,7 @@ class MeanSquaredErrorConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
-    dist_sync_fn: Callable = None
+    dist_sync_fn: Any = None # Callable
 
 
 @dataclass
@@ -45,4 +46,4 @@ class MeanSquaredLogErrorConf:
     compute_on_step: bool = True
     dist_sync_on_step: bool = False
     process_group: Any = None
-    dist_sync_fn: Callable = None
+    dist_sync_fn: Any = None # Callable
