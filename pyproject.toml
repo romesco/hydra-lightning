@@ -49,7 +49,7 @@ source = [
     "hydra-configs-pytorch-lightning",
     "hydra-configs-pytorch-lightning/hydra_configs"
 ]
-omit = ["*site-packages*", "*tests*"]
+omit = ["*site-packages*", "*tests*", "*.setup.py"]
 
 [tool.coverage.report]
 show_missing = true
