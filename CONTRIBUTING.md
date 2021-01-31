@@ -28,9 +28,15 @@ GitHub Actions ->
 
 ```bash
 # Install non-system python (we recommend pyenv).
+# For more info on pyenv: https://github.com/pyenv/pyenv
 # Feel free to skip this if you already have a conda python installed.
 
+
 curl https://pyenv.run | bash
+# Add commands to terminal startup. For bash:
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
 exec $SHELL
 pyenv install 3.9.0
 pyenv local 3.9.0 # sets this as local python version for directory
