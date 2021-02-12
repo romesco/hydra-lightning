@@ -36,7 +36,7 @@ class ModelCheckpointConf:
     mode: str = "auto"
     period: int = 1
     prefix: str = ""
-    dirpath: Any = MISSING  # Union[str, Path, NoneType]
+    dirpath: Any = None  # Union[str, Path, NoneType]
     filename: Optional[str] = None
 
 
