@@ -65,6 +65,4 @@ class TrainerConf:
     amp_backend: str = "native"
     amp_level: str = "O2"
     distributed_backend: Optional[str] = None
-    automatic_optimization: Optional[bool] = None
     move_metrics_to_cpu: bool = False
-    enable_pl_optimizer: bool = False
